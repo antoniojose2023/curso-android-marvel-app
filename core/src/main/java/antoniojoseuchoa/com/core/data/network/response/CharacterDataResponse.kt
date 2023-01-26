@@ -1,5 +1,5 @@
 package antoniojoseuchoa.com.core.data.network.response
 
-data class CharacterDataResponse (
+data class CharacterDataResponse(
     val results: List<CharacterResponse>
 )
