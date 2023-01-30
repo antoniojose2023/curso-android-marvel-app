@@ -1,4 +1,4 @@
-package antoniojoseuchoa.com.core.data.response
+package com.example.marvelapp.framework.network.response
 
 data class CharacterResponse(
     val id: Int,

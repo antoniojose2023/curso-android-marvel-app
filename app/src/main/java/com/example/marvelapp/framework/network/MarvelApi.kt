@@ -1,6 +1,6 @@
-package antoniojoseuchoa.com.core.data
+package com.example.marvelapp.framework.network
 
-import antoniojoseuchoa.com.core.data.response.CharacterDataWrapper
+import com.example.marvelapp.framework.network.response.CharacterDataWrapper
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
 
