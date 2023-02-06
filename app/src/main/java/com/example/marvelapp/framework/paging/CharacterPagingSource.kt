@@ -8,7 +8,6 @@ import antoniojoseuchoa.com.core.domain.model.Character
 import com.example.marvelapp.framework.network.response.CharacterDataWrapper
 import com.example.marvelapp.framework.network.response.toCharacter
 
-
 class CharacterPagingSource (
     private val remoteDataSource: CharacterRemoteDataSource<CharacterDataWrapper>,
     private val query: String ): PagingSource<Int, Character>(){
