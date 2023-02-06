@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import antoniojoseuchoa.com.core.domain.model.Character
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.marvelapp.databinding.ItemCharacterBinding
 
-class CharacterViewHolder(binding: ItemCharacterBinding) : ViewHolder(binding.root) {
+class CharacterViewHolder(binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root) {
 
     var tvNome: TextView = binding.tvNameCharacter
     var ivCharacter: ImageView = binding.ivCharacter

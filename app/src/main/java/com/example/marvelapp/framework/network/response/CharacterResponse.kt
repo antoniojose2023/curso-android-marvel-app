@@ -1,7 +1,13 @@
 package com.example.marvelapp.framework.network.response
+import antoniojoseuchoa.com.core.domain.model.Character
 
 data class CharacterResponse(
     val id: Int,
-    val name: String,
-    val thumbnail: ThumbnailResponse
+    var name: String,
+    var thumbnail: ThumbnailResponse
+)
+
+fun CharacterResponse.toCharacter() = Character(
+    name = name,
+    image = "${thumbnail.path}${thumbnail.extension}"
 )

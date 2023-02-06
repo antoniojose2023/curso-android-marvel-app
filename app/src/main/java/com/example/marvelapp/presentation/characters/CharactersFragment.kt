@@ -1,6 +1,7 @@
 package com.example.marvelapp.presentation.characters
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import antoniojoseuchoa.com.core.domain.model.Character
 import com.example.marvelapp.databinding.FragmentCharactersBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-
+@Suppress("SpacingAroundOperators")
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
 
@@ -41,10 +42,11 @@ class CharactersFragment : Fragment() {
     }
 
     private fun initCharacterAdapter() {
+        Log.i("TAG", "initCharacterAdapter: " + adapter.getItemId(2))
         binding.rvCharacter.run {
             setHasFixedSize(true)
             adapter = adapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireActivity())
         }
     }
 }
