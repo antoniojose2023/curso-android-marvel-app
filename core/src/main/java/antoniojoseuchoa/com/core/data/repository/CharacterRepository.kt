@@ -4,5 +4,5 @@ import androidx.paging.PagingSource
 import antoniojoseuchoa.com.core.domain.model.Character
 
 interface CharacterRepository {
-    suspend fun getCharacter(query: String): PagingSource<Int, Character>
+    fun getCharacter(query: String): PagingSource<Int, Character>
 }

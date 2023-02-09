@@ -8,19 +8,20 @@ import antoniojoseuchoa.com.core.domain.model.Character
 import com.example.marvelapp.framework.network.response.CharacterDataWrapper
 import com.example.marvelapp.framework.network.response.toCharacter
 
-class CharacterPagingSource (
+class CharacterPagingSource(
     private val remoteDataSource: CharacterRemoteDataSource<CharacterDataWrapper>,
-    private val query: String ): PagingSource<Int, Character>(){
+    private val query: String
+) : PagingSource<Int, Character>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
-        try{
+        try {
             val offset = params.key ?: 0
 
             var queries = hashMapOf(
                 "offset" to offset.toString()
             )
 
-            if(query.isNotEmpty()){
+            if (query.isNotEmpty()) {
                  queries["nameStartsWith"] = query
             }
 
@@ -31,22 +32,21 @@ class CharacterPagingSource (
            return LoadResult.Page(
                data = response.dataResponse.results.map { it.toCharacter() },
                prevKey = null,
-               nextKey = if(responseOffSet < responseTotal) responseOffSet + LIMIT else null
+               nextKey = if (responseOffSet < responseTotal) responseOffSet + LIMIT else null
            )
-
-        }catch (ex: java.lang.Exception){
+        } catch (ex: java.lang.Exception) {
             return LoadResult.Error(ex)
         }
     }
 
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
             return state.anchorPosition?.let { anchorPosition ->
-                 val anchorPage = state.closestPageToPosition( anchorPosition )
+                 val anchorPage = state.closestPageToPosition(anchorPosition)
                  anchorPage?.prevKey?.plus(LIMIT) ?: anchorPage?.nextKey?.minus(LIMIT)
             }
     }
 
-    companion object{
+    companion object {
         const val LIMIT = 20
     }
 }
