@@ -8,8 +8,9 @@ import antoniojoseuchoa.com.core.data.repository.CharacterRepository
 import antoniojoseuchoa.com.core.usecase.base.PagingUseCase
 import antoniojoseuchoa.com.core.domain.model.Character
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetCharacterUseCase(
+class GetCharacterUseCase @Inject constructor(
     private val characterRepository: CharacterRepository
     ) : PagingUseCase<GetCharacterUseCase.GetCharacterParams, Character>() {
 
