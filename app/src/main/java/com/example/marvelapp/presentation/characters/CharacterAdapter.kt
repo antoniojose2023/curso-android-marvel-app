@@ -2,19 +2,23 @@ package com.example.marvelapp.presentation.characters
 
 
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import antoniojoseuchoa.com.core.domain.model.Character
+import javax.inject.Inject
 
-class CharacterAdapter : ListAdapter<Character, CharacterViewHolder>(differCallback) {
+class CharacterAdapter @Inject constructor() : PagingDataAdapter<Character, CharacterViewHolder>(differCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
           return CharacterViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { item ->
+            holder.bind(item)
+        }
     }
+
 
     companion object {
         val differCallback = object : DiffUtil.ItemCallback<Character>() {

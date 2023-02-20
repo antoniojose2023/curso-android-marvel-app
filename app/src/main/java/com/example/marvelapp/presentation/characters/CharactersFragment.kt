@@ -1,23 +1,24 @@
 package com.example.marvelapp.presentation.characters
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import antoniojoseuchoa.com.core.domain.model.Character
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.marvelapp.databinding.FragmentCharactersBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-@Suppress("SpacingAroundOperators")
+@Suppress("SpacingAroundOperators", "MaximumLineLength", "SpacingAroundCurly", "MaxLineLength")
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
 
     private var _binding: FragmentCharactersBinding? = null
     val binding: FragmentCharactersBinding get() = _binding!!
-    private val adapter = CharacterAdapter()
+    private val characterAdapter = CharacterAdapter()
+    private val characterViewModel: CharacterViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,21 +33,17 @@ class CharactersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initCharacterAdapter()
 
-        adapter.submitList(
-            listOf(
-                Character("Spider Man", "https://tinyurl.com/2zmuz79v"),
-                Character("Spider Man 2", "https://tinyurl.com/2zmuz79v"),
-                Character("Spider Man 3", "https://tinyurl.com/2zmuz79v"),
-            )
-        )
+        lifecycleScope.launch {
+            characterViewModel.charactersData("").collect { paginData ->
+                 characterAdapter.submitData(paginData)
+            }
+        }
     }
 
     private fun initCharacterAdapter() {
-        Log.i("TAG", "initCharacterAdapter: " + adapter.getItemId(2))
-        binding.rvCharacter.run {
+        with(binding.rvCharacter) {
             setHasFixedSize(true)
-            adapter = adapter
-            layoutManager = LinearLayoutManager(requireActivity())
+            adapter = characterAdapter
         }
     }
 }

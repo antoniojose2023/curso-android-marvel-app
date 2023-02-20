@@ -9,5 +9,5 @@ data class CharacterResponse(
 
 fun CharacterResponse.toCharacter() = Character(
     name = name,
-    image = "${thumbnail.path}${thumbnail.extension}"
+    image = "${thumbnail.path}${thumbnail.extension}".replace("http", "https")
 )

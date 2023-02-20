@@ -18,5 +18,6 @@ interface RepositoryModule {
     fun binCharacterRepositoryImpl(characterRepositoryImpl: CharacterRepositoryImpl): CharacterRepository
 
     @Binds
-    fun binCharaterRemoteDataSource(retrofitCharacterRemoteDataSource: RetrofitCharacterRemoteDataSource): CharacterRemoteDataSource<CharacterDataWrapper>
+    fun binCharaterRemoteDataSource(retrofitCharacterRemoteDataSource: RetrofitCharacterRemoteDataSource):
+            CharacterRemoteDataSource<CharacterDataWrapper>
 }

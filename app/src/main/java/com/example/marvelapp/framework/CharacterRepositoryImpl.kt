@@ -12,7 +12,7 @@ import javax.inject.Inject
 class CharacterRepositoryImpl @Inject constructor(
     private val remoteDataSource: CharacterRemoteDataSource<CharacterDataWrapper>
  ) : CharacterRepository {
-    override suspend fun getCharacter(query: String): PagingSource<Int, Character> {
+    override fun getCharacter(query: String): PagingSource<Int, Character> {
         return CharacterPagingSource(remoteDataSource, query)
     }
  }

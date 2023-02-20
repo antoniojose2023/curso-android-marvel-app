@@ -12,8 +12,10 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterViewModel @Inject constructor(private val getCharacterUseCase: GetCharacterUseCase): ViewModel() {
-    fun getPagingData(query: String): Flow<PagingData<Character>>{
+class CharacterViewModel @Inject constructor(
+        private val getCharacterUseCase: GetCharacterUseCase
+) : ViewModel() {
+    fun charactersData(query: String): Flow<PagingData<Character>> {
         return getCharacterUseCase(
               GetCharacterUseCase.GetCharacterParams(query, getPageConfig())
         ).cachedIn(viewModelScope)

@@ -17,7 +17,7 @@ class CharacterPagingSource(
         try {
             val offset = params.key ?: 0
 
-            var queries = hashMapOf(
+            val queries = hashMapOf(
                 "offset" to offset.toString()
             )
 

@@ -9,7 +9,7 @@ abstract class UseCase<in P, R> {
     operator fun invoke(params: P): Flow<ResultStatus<R>> = flow {
         emit(ResultStatus.Loader)
         emit(doWork(params))
-    }.catch {  throwable ->
+    }.catch { throwable ->
         emit(ResultStatus.Erro(throwable))
     }
 
@@ -18,5 +18,5 @@ abstract class UseCase<in P, R> {
 
 abstract class PagingUseCase<in P, R : Any> {
     operator fun invoke(params: P): Flow<PagingData<R>> = createFlowObservable(params)
-    abstract fun createFlowObservable(params: P): Flow<PagingData<R>>
+    protected abstract fun createFlowObservable(params: P): Flow<PagingData<R>>
 }

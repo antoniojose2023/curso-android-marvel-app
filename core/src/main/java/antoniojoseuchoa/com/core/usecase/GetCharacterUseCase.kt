@@ -1,6 +1,5 @@
 package antoniojoseuchoa.com.core.usecase
 
-
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -16,7 +15,7 @@ class GetCharacterUseCase @Inject constructor(
 
     override fun createFlowObservable(params: GetCharacterParams): Flow<PagingData<Character>> {
         return Pager(config = params.pagingConfig) {
-              characterRepository.getCharacter(params.query)
+            characterRepository.getCharacter(params.query)
         }.flow
     }
 

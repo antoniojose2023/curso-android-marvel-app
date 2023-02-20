@@ -2,6 +2,7 @@ package com.example.marvelapp.framework.di
 
 import com.example.marvelapp.BuildConfig
 import com.example.marvelapp.framework.network.MarvelApi
+import com.example.marvelapp.framework.network.interceptor.AuthorizationInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -20,7 +22,6 @@ class NetworkModule {
         private const val TIME_OUT_CONNECT = 15L
         private const val TIME_OUT_READ = 15L
     }
-
 
     @Provides
     fun provideHttpLogginInterceptor() = HttpLoggingInterceptor().apply {
@@ -34,9 +35,22 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor) =
+    @Suppress("MaximumLineLength")
+    fun provideHttpAutthorizationInterceptor() =
+        AuthorizationInterceptor(BuildConfig.PUBLIC_KEY,
+            BuildConfig.PRIVATE_KEY,
+            Calendar.getInstance(TimeZone.getTimeZone("UTC")))
+
+    @Provides
+    @Suppress("ParameterListWrapping")
+    fun provideOkHttpClient(
+        authorizationInterceptor: AuthorizationInterceptor,
+        httpLoggingInterceptor: HttpLoggingInterceptor
+
+    ) =
         OkHttpClient.Builder()
             .addInterceptor(interceptor = httpLoggingInterceptor)
+            .addInterceptor(interceptor = authorizationInterceptor)
             .connectTimeout(TIME_OUT_CONNECT, TimeUnit.SECONDS)
             .readTimeout(TIME_OUT_READ, TimeUnit.SECONDS)
             .build()
