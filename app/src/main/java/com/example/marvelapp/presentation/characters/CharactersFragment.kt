@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 @Suppress("SpacingAroundOperators", "MaximumLineLength", "SpacingAroundCurly", "MaxLineLength")
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
-
     private var _binding: FragmentCharactersBinding? = null
     val binding: FragmentCharactersBinding get() = _binding!!
     private val characterAdapter = CharacterAdapter()
@@ -28,14 +27,13 @@ class CharactersFragment : Fragment() {
          _binding = this
     }.root
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initCharacterAdapter()
 
         lifecycleScope.launch {
-            characterViewModel.charactersData("").collect { paginData ->
-                 characterAdapter.submitData(paginData)
+            characterViewModel.charactersData("").collect { pagingData ->
+                 characterAdapter.submitData(pagingData)
             }
         }
     }

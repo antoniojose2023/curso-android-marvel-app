@@ -7,7 +7,8 @@ data class CharacterResponse(
     var thumbnail: ThumbnailResponse
 )
 
+
 fun CharacterResponse.toCharacter() = Character(
     name = name,
-    image = "${thumbnail.path}${thumbnail.extension}".replace("http", "https")
+    image = "${this.thumbnail.path}.${this.thumbnail.extension}".replace("http", "https")
 )

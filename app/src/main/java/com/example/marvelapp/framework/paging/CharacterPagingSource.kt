@@ -26,11 +26,11 @@ class CharacterPagingSource(
             }
 
            val response = remoteDataSource.fetchCharacter(queries)
-           val responseOffSet = response.dataResponse.offset
-           val responseTotal = response.dataResponse.total
+           val responseOffSet = response.data.offset
+           val responseTotal = response.data.total
 
            return LoadResult.Page(
-               data = response.dataResponse.results.map { it.toCharacter() },
+               data = response.data.results.map { it.toCharacter() },
                prevKey = null,
                nextKey = if (responseOffSet < responseTotal) responseOffSet + LIMIT else null
            )
