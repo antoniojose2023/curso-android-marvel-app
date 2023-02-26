@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import com.example.marvelapp.databinding.FragmentCharactersBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +21,7 @@ import kotlinx.coroutines.launch
 class CharactersFragment : Fragment() {
     private var _binding: FragmentCharactersBinding? = null
     val binding: FragmentCharactersBinding get() = _binding!!
-    private val characterAdapter = CharacterAdapter()
+    private lateinit var characterAdapter: CharacterAdapter
     private val characterViewModel: CharacterViewModel by viewModels()
 
     override fun onCreateView(
@@ -36,16 +38,24 @@ class CharactersFragment : Fragment() {
         observableInitialLoadState()
 
         lifecycleScope.launch {
-            characterViewModel.charactersData("").collect { pagingData ->
-                 characterAdapter.submitData(pagingData)
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                characterViewModel.charactersData("").collect { pagingData ->
+                    characterAdapter.submitData(pagingData)
+                }
             }
         }
     }
 
     private fun initRecyclerViewCharacter() {
+        characterAdapter = CharacterAdapter()
         with(binding.rvCharacter) {
             setHasFixedSize(true)
-            adapter = characterAdapter
+            scrollToPosition(0)
+            adapter = characterAdapter.withLoadStateFooter(
+                    footer = CharacterLoadMoreAdapter(
+                    characterAdapter::retry
+                )
+            )
         }
     }
 
